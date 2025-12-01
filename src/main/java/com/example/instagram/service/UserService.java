@@ -5,4 +5,6 @@ import com.example.instagram.entity.User;
 
 public interface UserService {
     User register(SignUpRequest signUpRequest);
+
+    boolean existsByUsername(String username);
 }

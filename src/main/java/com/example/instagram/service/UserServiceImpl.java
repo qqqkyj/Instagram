@@ -24,8 +24,13 @@ public class UserServiceImpl implements UserService{
                 .password(passwordEncoder.encode(signUpRequest.getPassword()))
                 .email(signUpRequest.getEmail())
                 .role(Role.USER)
-                .name(signUpRequest.getUsername())
+                .name(signUpRequest.getName())
                 .build();
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userRepository.existsByUsername(username);
     }
 }

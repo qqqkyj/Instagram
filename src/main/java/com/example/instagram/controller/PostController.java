@@ -48,12 +48,16 @@ public class PostController {
 
     //상세페이지
     @GetMapping("/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable Long id, Model model,
+                         //현재 로그인한 사용자의 정보
+                         @AuthenticationPrincipal CustomUserDetails userDetails) {
         PostResponse post = postService.getPostById(id);
         List<CommentResponse> comments = commentService.getAllCommentsByPostId(id);
         model.addAttribute("post", post);
         model.addAttribute("commentRequest", new CommentCreateRequest());
         model.addAttribute("comments", comments);
+        model.addAttribute("liked", likeService.isLiked(id,userDetails.getId()));
+        model.addAttribute("likeCount", likeService.getLikeCount(id));
         return "post/detail";
     }
 

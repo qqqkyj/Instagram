@@ -24,11 +24,37 @@ public class FollowServiceImpl implements FollowService{
     public void toggleFollow(Long followerId, String followingUsername) {
         User follower = userService.findById(followerId);
         User following = userService.findByUsername(followingUsername);
+        //자기 자신 팔로우 방지
+        if(follower.getId() == following.getId()){
+            throw new RuntimeException("자기 자신은 팔로우 할 수 없습니다.");
+        }
+        //팔로우 토글
+        Optional<Follow> existingFollow = followRepository
+                .findByFollowerIdAndFollowingId(follower.getId(), following.getId());
+        if(existingFollow.isPresent()){
+            followRepository.delete(existingFollow.get());
+        }
+        else{
+            Follow follow = Follow.builder()
+                    .follower(follower)
+                    .following(following)
+                    .build();
+            followRepository.save(follow);
+        }
+    }
 
-        Follow follow = Follow.builder()
-                .follower(follower)
-                .following(following)
-                .build();
-        followRepository.save(follow);
+    @Override
+    public boolean isFollowing(Long followerId, Long followingId) {
+        return followRepository.existsByFollowerIdAndFollowingId(followerId, followingId);
+    }
+
+    @Override
+    public long countByFollowerId(Long followerId) {
+        return followRepository.countByFollowerId(followerId);
+    }
+
+    @Override
+    public long countByFollowingId(Long followingId) {
+        return followRepository.countByFollowingId(followingId);
     }
 }

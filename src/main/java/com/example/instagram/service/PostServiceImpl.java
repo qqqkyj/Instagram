@@ -53,4 +53,9 @@ public class PostServiceImpl implements PostService {
         User user = userService.findByUsername(username);
         return postRepository.findByUserIdOrderByCreatedAtDesc(user.getId()).stream().map(PostResponse::from).toList();
     }
+
+    @Override
+    public long countByUserId(Long userId) {
+        return postRepository.countByUserId(userId);
+    }
 }

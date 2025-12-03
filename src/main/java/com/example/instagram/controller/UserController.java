@@ -28,14 +28,17 @@ public class UserController {
 
     //사용자 프로필
     @GetMapping("/{username}")
-    public String profile(@PathVariable String username,
+    public String profile(@PathVariable String username,//내가 팔로우 하려는 사용자
                           Model model,
+                          //나(현재 로그인한 사용자)
                           @AuthenticationPrincipal CustomUserDetails userDetails) {
         ProfileResponse profile = userService.getProfile(username);
         List<PostResponse> posts = postService.getPostsByUsername(username);
+        boolean isFollowing = followService.isFollowing(userDetails.getId(), profile.getId());
 
         model.addAttribute("profile", profile);
         model.addAttribute("posts", posts);
+        model.addAttribute("isFollowing", isFollowing);
         return "user/profile";
     }
 

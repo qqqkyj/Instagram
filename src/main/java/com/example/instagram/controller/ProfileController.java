@@ -37,8 +37,8 @@ public class ProfileController {
 
     @PostMapping("/edit")
     public String edit(@Valid @ModelAttribute ProfileUpdateRequest profileUpdateRequest,
+                       BindingResult bindingResult,//반드시 검증 대상 뒤에 와야 유효성 체크 가능
                        @AuthenticationPrincipal CustomUserDetails userDetails,
-                       BindingResult bindingResult,
                        Model model){
         if(bindingResult.hasErrors()){
             UserResponse currentUser = userService.getUserById(userDetails.getId());

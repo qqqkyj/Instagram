@@ -5,6 +5,7 @@ import com.example.instagram.dto.request.SignUpRequest;
 import com.example.instagram.dto.response.ProfileResponse;
 import com.example.instagram.dto.response.UserResponse;
 import com.example.instagram.entity.User;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
     User register(SignUpRequest signUpRequest);
@@ -19,5 +20,5 @@ public interface UserService {
 
     UserResponse getUserById(Long id);
 
-    void updateProfile(Long id, ProfileUpdateRequest profileUpdateRequest);
+    void updateProfile(Long id, ProfileUpdateRequest profileUpdateRequest, MultipartFile profileImg);
 }

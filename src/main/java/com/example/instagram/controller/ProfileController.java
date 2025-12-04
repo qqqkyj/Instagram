@@ -11,10 +11,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
@@ -39,14 +37,15 @@ public class ProfileController {
     public String edit(@Valid @ModelAttribute ProfileUpdateRequest profileUpdateRequest,
                        BindingResult bindingResult,//반드시 검증 대상 뒤에 와야 유효성 체크 가능
                        @AuthenticationPrincipal CustomUserDetails userDetails,
-                       Model model){
+                       Model model,
+                       @RequestParam(value = "profileImg", required = false)MultipartFile profileImg){
         if(bindingResult.hasErrors()){
             UserResponse currentUser = userService.getUserById(userDetails.getId());
             model.addAttribute("currentUser", currentUser);
             return "profile/edit";
         }
 
-        userService.updateProfile(userDetails.getId(), profileUpdateRequest);
+        userService.updateProfile(userDetails.getId(), profileUpdateRequest, profileImg);
 
         return "redirect:/users/" + userDetails.getUsername();
     }

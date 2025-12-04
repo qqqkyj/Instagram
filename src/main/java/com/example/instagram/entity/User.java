@@ -23,6 +23,8 @@ public class User extends BaseEntity{
     private Role role;
     @Column(length = 200)
     private String bio;
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     @Builder
     public User(String username, String password, String email, Role role, String bio, String name) {

@@ -2,6 +2,7 @@ package com.example.instagram.service;
 
 import com.example.instagram.dto.request.SignUpRequest;
 import com.example.instagram.dto.response.ProfileResponse;
+import com.example.instagram.dto.response.UserResponse;
 import com.example.instagram.entity.User;
 
 public interface UserService {
@@ -14,4 +15,6 @@ public interface UserService {
     ProfileResponse getProfile(String username);
 
     User findByUsername(String username);
+
+    UserResponse getUserById(Long id);
 }

@@ -2,6 +2,7 @@ package com.example.instagram.service;
 
 import com.example.instagram.dto.request.SignUpRequest;
 import com.example.instagram.dto.response.ProfileResponse;
+import com.example.instagram.dto.response.UserResponse;
 import com.example.instagram.entity.Follow;
 import com.example.instagram.entity.Role;
 import com.example.instagram.entity.User;
@@ -59,5 +60,10 @@ public class UserServiceImpl implements UserService{
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found"));
+    }
+
+    @Override
+    public UserResponse getUserById(Long id) {
+        return UserResponse.from(findById(id));
     }
 }

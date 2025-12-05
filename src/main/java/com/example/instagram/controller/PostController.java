@@ -120,4 +120,12 @@ public class PostController {
         postService.update(postCreateRequest, image);
         return "redirect:/posts/"+postCreateRequest.getId();
     }
+
+    //게시글 삭제
+    @PostMapping("/{id}/delete")
+    public String delete(@PathVariable Long id,
+                         @AuthenticationPrincipal CustomUserDetails userDetails) {
+        postService.deleteById(id);
+        return "redirect:/users/" +  userDetails.getUsername();
+    }
 }

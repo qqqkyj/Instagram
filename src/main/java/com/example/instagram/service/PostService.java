@@ -29,4 +29,7 @@ public interface PostService {
 
     //게시물 수정
     void update(PostCreateRequest postCreateRequest, MultipartFile image);
+
+    //게시물 삭제
+    void deleteById(Long id);
 }

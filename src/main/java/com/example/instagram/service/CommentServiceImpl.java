@@ -33,6 +33,10 @@ public class CommentServiceImpl implements CommentService{
                 .user(user)
                 .content(commentCreateRequest.getContent())
                 .build();
+
+        // Post와 양방향 관계 설정
+        post.addComment(comment);  // Post의 comments 리스트에도 추가
+
         Comment saved = commentRepository.save(comment);
         return CommentResponse.from(saved);
     }
